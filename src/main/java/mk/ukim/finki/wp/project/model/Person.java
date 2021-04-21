@@ -1,0 +1,25 @@
+package mk.ukim.finki.wp.project.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Entity
+public class Person{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private String surname;
+
+    @Column(length = 400)
+    private String bio;
+    //private List<Projects?> projects;
+}
+
