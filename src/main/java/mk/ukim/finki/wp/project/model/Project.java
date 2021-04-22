@@ -3,7 +3,6 @@ package mk.ukim.finki.wp.project.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import mk.ukim.finki.wp.project.model.enumerations.Genre;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,15 +11,14 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity
-public class MusicBand{
+@Inheritance
+@DiscriminatorColumn(name = "PROJ_TYPE")
+@Table(name = "project")
+public abstract class Project{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @ManyToMany(mappedBy = "projects")
     private List<Person> members;
-
-    private Genre genre;
 }
-
-//????

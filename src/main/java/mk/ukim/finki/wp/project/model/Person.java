@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +21,13 @@ public class Person{
 
     @Column(length = 400)
     private String bio;
-    //private List<Projects?> projects;
+
+    @ManyToMany
+    @JoinTable(
+            name = "person_projects",
+            joinColumns = @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "PROJECT_ID", referencedColumnName = "ID")
+    )
+    private List<Project> projects;
 }
 
