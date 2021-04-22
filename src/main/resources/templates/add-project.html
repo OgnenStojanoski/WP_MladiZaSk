@@ -1,0 +1,26 @@
+<div xmlns:th="thymeleaf.org">
+    <th:block>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <form action="/project/add-project-type" method="POST">
+                        <p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="type" type="radio" id="BAND" value="BAND">
+                            <label class="form-check-label" for="BAND">Music Band</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="type"  type="radio" id="VISUAL_ART" value="VISUAL_ART">
+                            <label class="form-check-label" for="VISUAL_ART">Visual Artist</label>
+                        </div>
+                        </p>
+                        <button id="submit" type="submit" class="btn btn-primary">Next</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </th:block>
+</div>

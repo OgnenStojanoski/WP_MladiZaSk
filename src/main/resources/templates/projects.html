@@ -1,5 +1,5 @@
 <div xmlns:th="thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <section class="jumbotron text-center">
+    <section class="jumbotron text-left">
         <div class="container">
             <h3 class="jumbotron-heading">All artists</h3>
         </div>
@@ -7,25 +7,22 @@
 
     <div class="container mb-4">
         <div class="row">
-            <div class="col-12" th:if="${people.size() > 0}">
+            <div class="col-12">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">Artist name</th>
-                            <th scope="col">Artist surname</th>
-                            <th scope="col">Short biography</th>
-                            <!--<th scope="col">Projects</th>-->
+                            <th scope="col">Project type</th>
+                            <th scope="col">Artist</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="person : ${people}" class="product">
-                            <td th:text="${person.getName()}"></td>
-                            <td th:text="${person.getSurname()}"></td>
-                            <td th:text="${person.getBio()}"></td>
+                        <tr th:each="project : ${projects}" class="project">
+                            <td th:text="${project.class.name}"></td>
+                            <td th:text="${project.getName()}"></td>
                             <td class="text-right">
                                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                                    <form th:action="@{'/person/delete/{id}' (id=${person.getId()})}"
+                                    <form th:action="@{'/project/delete/{id}' (id=${project.getId()})}"
                                           th:method="DELETE">
                                         <button type="submit"
                                                 class="btn btn-sm btn-danger delete-product">
@@ -34,9 +31,9 @@
                                     </form>
                                 </th:block>
                                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                                    <a th:href="@{'/person/edit/{id}' (id=${person.getId()})}"
+                                    <a th:href="@{'/project/add-members/{id}' (id=${project.getId()})}"
                                        class="btn btn-sm btn-info edit-product">
-                                        <i class="fa fa-trash">Edit</i>
+                                        <i class="fa fa-trash">Add members</i>
                                     </a>
                                 </th:block>
                             </td>
@@ -48,8 +45,8 @@
             <div class="col mb-3">
                 <div class="row">
                     <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a href="/person/add-form" class="btn btn-block btn-dark add-product-btn">
-                            Add new person
+                        <a href="/project/add-form" class="btn btn-block btn-dark add-product-btn">
+                            Add new project
                         </a>
                     </div>
                 </div>

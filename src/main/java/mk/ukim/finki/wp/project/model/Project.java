@@ -19,6 +19,12 @@ public abstract class Project{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     @ManyToMany(mappedBy = "projects")
     private List<Person> members;
+
+    public Project(String name) {
+        this.name = name;
+    }
 }

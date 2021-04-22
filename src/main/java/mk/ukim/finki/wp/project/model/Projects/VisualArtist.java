@@ -14,4 +14,9 @@ import javax.persistence.*;
 @DiscriminatorValue("Artist")
 public class VisualArtist extends Project {
     private String technique;
+
+    public VisualArtist(String name, String technique) {
+        super(name);
+        this.technique = technique;
+    }
 }

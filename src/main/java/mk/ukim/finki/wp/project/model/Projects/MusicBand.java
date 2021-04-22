@@ -16,4 +16,9 @@ import javax.persistence.*;
 public class MusicBand extends Project {
     @Enumerated(EnumType.STRING)
     private Genre genre;
+
+    public MusicBand(String name, Genre genre) {
+        super(name);
+        this.genre = genre;
+    }
 }

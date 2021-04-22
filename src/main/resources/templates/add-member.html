@@ -1,0 +1,30 @@
+<div xmlns:th="thymeleaf.org">
+    <section class="jumbotron text-left">
+        <div class="container">
+            <h4 class="jumbotron-heading">Add members for </h4>
+            <div class="h1" th:text="${project.getName()}"></div>
+        </div>
+    </section>
+
+    <th:block>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <form action="/project/add-member" method="POST">
+                        <input id="project_id" type="hidden" name="project_id" th:value="${project.getId()}">
+                        <div class="form-group">
+                            <label for="member_id">Select member</label>
+                            <select class="form-control selectpicker" name="member_id" id="member_id">
+                                <option th:each="member : ${people}" th:value="${member.id}" th:text="${member.getName()} + ' ' + ${member.getSurname()}"></option>
+                            </select>
+                        </div>
+                        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                        <a type="button" class="btn btn-primary" href="/project">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </th:block>
+</div>

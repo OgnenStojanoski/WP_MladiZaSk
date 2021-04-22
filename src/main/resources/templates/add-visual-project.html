@@ -1,0 +1,36 @@
+<div xmlns:th="thymeleaf.org">
+    <th:block>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <form action="/project/add" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="name"
+                                   name="name"
+                                   th:value="''"
+                                   required
+                                   placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="technique">Technique</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="technique"
+                                   name="technique"
+                                   th:value="''"
+                                   required
+                                   placeholder="Technique">
+                        </div>
+                        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                        <a type="button" class="btn btn-primary" href="/project">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </th:block>
+</div>
