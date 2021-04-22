@@ -29,5 +29,11 @@ public class Person{
             inverseJoinColumns = @JoinColumn(name = "PROJECT_ID", referencedColumnName = "ID")
     )
     private List<Project> projects;
+
+    public Person(String name, String surname, String bio) {
+        this.name = name;
+        this.surname = surname;
+        this.bio = bio;
+    }
 }
 

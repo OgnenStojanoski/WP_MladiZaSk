@@ -1,0 +1,51 @@
+<div xmlns:th="thymeleaf.org">
+<th:block>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">MLADI ZA SKOPJE</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="/person/add" method="POST">
+                    <input id="id" type="hidden" name="id" th:value="(${person} != null ? ${person.getId()} : '')">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text"
+                               class="form-control"
+                               id="name"
+                               name="name"
+                               th:value="(${person} != null ? ${person.getName()} : '')"
+                               required
+                               placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="surname">Surname</label>
+                        <input type="text"
+                               class="form-control"
+                               id="surname"
+                               name="surname"
+                               th:value="(${person} != null ? ${person.getSurname()} : '')"
+                               placeholder="Surname">
+                    </div>
+                    <div class="form-group">
+                        <label for="bio">Biography</label>
+                        <input type="text"
+                               class="form-control"
+                               id="bio"
+                               name="bio"
+                               th:value="(${person} != null ? ${person.getBio()} : '')"
+                               placeholder="Biography">
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    <a type="button" class="btn btn-primary" href="/person">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>
+</div>

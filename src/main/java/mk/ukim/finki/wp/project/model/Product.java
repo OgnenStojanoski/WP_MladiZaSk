@@ -10,13 +10,18 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Data
 @Entity
-@Inheritance
-@DiscriminatorColumn(name = "PROD_TYPE")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+    name = "PROD_TYPE",
+    discriminatorType = DiscriminatorType.STRING
+)
 @Table(name = "product")
 public abstract class Product{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String name;
 
     private Integer price;
 
