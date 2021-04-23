@@ -1,7 +1,7 @@
 <header xmlns:th="thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="/">MLADI ZA SKOPJE</a>
+            <a class="navbar-brand" href="/"><ins>MLADI ZA SKOPJE</ins></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -10,16 +10,16 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
                 <ul class="navbar-nav m-auto">
                     <li class="nav-item m-auto">
-                        <a class="nav-link active" href="/events">Events</a>
+                        <a class="nav-link active" href="/events"><ins>Events</ins></a>
                     </li>
                     <!--<li class="nav-item m-auto" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="nav-link active" href="/product">Products</a>
                     </li>-->
                     <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a class="nav-link active" href="/project">Artists</a>
+                        <a class="nav-link active" href="/project"><ins>Artists</ins></a>
                     </li>
                     <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a class="nav-link active" href="/person">People</a>
+                        <a class="nav-link active" href="/person"><ins>People</ins></a>
                     </li>
                 </ul>
 
