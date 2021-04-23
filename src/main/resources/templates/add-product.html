@@ -1,0 +1,30 @@
+<div xmlns:th="thymeleaf.org">
+    <th:block>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <form action="/product/add-product-type" method="POST">
+                        <p>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="type" type="radio" id="CD" value="CD">
+                            <label class="form-check-label" for="CD">CD</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="type"  type="radio" id="T_SHIRT" value="T_SHIRT">
+                            <label class="form-check-label" for="T_SHIRT">T-Shirt</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="type"  type="radio" id="TICKET" value="TICKET">
+                            <label class="form-check-label" for="TICKET">Ticket</label>
+                        </div>
+                        </p>
+                        <button id="submit" type="submit" class="btn btn-primary">Next</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </th:block>
+</div>

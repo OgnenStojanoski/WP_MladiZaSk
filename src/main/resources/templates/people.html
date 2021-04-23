@@ -1,31 +1,31 @@
 <div xmlns:th="thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <section class="jumbotron text-left">
+    <section class="jumbotron text-center">
         <div class="container">
-            <h3 class="jumbotron-heading">All products</h3>
+            <h3 class="jumbotron-heading">All artists</h3>
         </div>
     </section>
 
     <div class="container mb-4">
         <div class="row">
-            <div class="col-12" th:if="${products.size() > 0}">
+            <div class="col-12" th:if="${people.size() > 0}">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">Product</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
+                            <th scope="col">Artist name</th>
+                            <th scope="col">Artist surname</th>
+                            <th scope="col">Short biography</th>
                             <!--<th scope="col">Projects</th>-->
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="product : ${products}" class="product">
-                            <td th:text="${product.getName()}"></td>
-                            <td th:text="${product.getPrice()}"></td>
-                            <td th:text="${product.getQuantity()}"></td>
+                        <tr th:each="person : ${people}" class="product">
+                            <td th:text="${person.getName()}"></td>
+                            <td th:text="${person.getSurname()}"></td>
+                            <td th:text="${person.getBio()}"></td>
                             <td class="text-right">
                                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                                    <form th:action="@{'/product/delete/{id}' (id=${product.getId()})}"
+                                    <form th:action="@{'/person/delete/{id}' (id=${person.getId()})}"
                                           th:method="DELETE">
                                         <button type="submit"
                                                 class="btn btn-sm btn-danger delete-product">
@@ -34,7 +34,7 @@
                                     </form>
                                 </th:block>
                                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                                    <a th:href="@{'/product/edit/{id}' (id=${product.getId()})}"
+                                    <a th:href="@{'/person/edit/{id}' (id=${person.getId()})}"
                                        class="btn btn-sm btn-info edit-product">
                                         <i class="fa fa-trash">Edit</i>
                                     </a>
@@ -48,8 +48,8 @@
             <div class="col mb-3">
                 <div class="row">
                     <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a href="/product/add-form" class="btn btn-block btn-dark add-product-btn">
-                            Add new product
+                        <a href="/person/add-form" class="btn btn-block btn-dark add-product-btn">
+                            Add new person
                         </a>
                     </div>
                 </div>

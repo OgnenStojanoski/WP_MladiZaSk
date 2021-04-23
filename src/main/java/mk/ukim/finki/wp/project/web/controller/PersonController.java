@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/person")
@@ -28,7 +29,19 @@ public class PersonController{
         }
         List<Person> people = this.personService.findAll();
         model.addAttribute("people", people);
-        model.addAttribute("bodyContent", "products");
+        model.addAttribute("bodyContent", "people");
+        return "master-template";
+    }
+
+    @GetMapping("/{id}")
+    public String getPerson(@RequestParam(required = false) String error, @PathVariable Long id, Model model){
+        if (error != null && !error.isEmpty()) {
+            model.addAttribute("hasError", true);
+            model.addAttribute("error", error);
+        }
+        Person person = this.personService.findById(id).orElseThrow();
+        model.addAttribute("person", person);
+        model.addAttribute("bodyContent", "get-person");
         return "master-template";
     }
 

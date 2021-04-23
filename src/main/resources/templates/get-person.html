@@ -1,0 +1,39 @@
+<div xmlns:th="thymeleaf.org">
+<th:block>
+    <section class="jumbotron text-left">
+        <div class="container">
+            <h2>MLADI ZA SKOPJE Artist</h2>
+            <h2 th:text="${person.getName()} + ' ' + ${person.getSurname()}"></h2>
+        </div>
+    </section>
+
+    <!--<div class="container">
+        <div class="row">
+            <div class="col-md-5">
+
+            </div>
+        </div>
+    </div>-->
+    <div style="display: flex" class="wrapper">
+
+        <!--<div class="left">
+            <img class="profile-picture" src="img/profile.jpg" width="200"/>
+            <h3 th:text="${person.getName()}" class="name"></h3>
+            <h2 th:text="${person.getSurname()}" class="surname"></h2>
+        </div>-->
+
+        <div style="margin-left: 220px" class="right">
+            <p th:text="${person.getBio()}" class="bio"></p>
+            <hr style="border: 2px solid">
+            <div>
+                <h6>Projects: </h6>
+                <ul th:each="project: ${person.getProjects()}" class="projects">
+                    <li th:text="${project.getName()}"></li>
+                </ul>
+            </div>    
+        </div>
+
+    </div>
+
+</th:block>
+</div>

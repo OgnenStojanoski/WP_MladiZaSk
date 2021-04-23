@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 public class Event{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
@@ -30,4 +30,12 @@ public class Event{
     @OneToMany(mappedBy = "event")
     private List<Product> products;
     //private String place;
+
+
+    public Event(Long id, VisualArtist artist, MusicBand band, LocalDateTime date) {
+        this.id = id;
+        this.artist = artist;
+        this.band = band;
+        this.date = date;
+    }
 }

@@ -30,6 +30,13 @@ public abstract class Product{
     @ManyToOne
     @JoinColumn(name = "EVENT_ID", referencedColumnName = "ID")
     private Event event;
+
+    public Product(String name, Integer price, Integer quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     // CDProduct
     // MerchProduct
     // TicketProduct

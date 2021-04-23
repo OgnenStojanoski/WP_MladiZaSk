@@ -1,6 +1,8 @@
 package mk.ukim.finki.wp.project.service.impl;
 
 import mk.ukim.finki.wp.project.exceptions.InvalidArgumentsException;
+import mk.ukim.finki.wp.project.exceptions.ProductAlreadyInShoppingCartException;
+import mk.ukim.finki.wp.project.exceptions.ProductNotFoundException;
 import mk.ukim.finki.wp.project.model.Product;
 import mk.ukim.finki.wp.project.model.ShoppingCart;
 import mk.ukim.finki.wp.project.model.User;
@@ -12,6 +14,7 @@ import mk.ukim.finki.wp.project.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService{
@@ -48,6 +51,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 
     @Override
     public ShoppingCart addProductToShoppingCart(String username, Long productId) {
-        return null;
+        ShoppingCart shoppingCart = this.getActiveShoppingCart(username);
+        Product product = this.productService.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(productId));
+        if(shoppingCart.getProducts()
+                .stream().filter(i -> i.getId().equals(productId))
+                .collect(Collectors.toList()).size() > 0)
+            throw new ProductAlreadyInShoppingCartException(productId, username);
+        shoppingCart.getProducts().add(product);
+        return this.shoppingCartRepository.save(shoppingCart);
     }
 }

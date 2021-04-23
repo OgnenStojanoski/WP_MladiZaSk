@@ -14,12 +14,22 @@
                         <tr>
                             <th scope="col">Project type</th>
                             <th scope="col">Artist</th>
+                            <th scope="col">Members</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="project : ${projects}" class="project">
                             <td th:text="${project.class.name}"></td>
                             <td th:text="${project.getName()}"></td>
+                            <th:block th:if="${project.getMembers().size == 0}">
+                                <td> </td>
+                            </th:block>
+                            <th:block th:each="member: ${project.getMembers()}">
+                                <td style="display: block">
+                                    <!--<input id="id" type="hidden" name="id" th:value="${member.id}">-->
+                                    <a th:href="@{/person/{id}(id=${member.id})}" th:text="${member.getName()}"></a>
+                                </td>
+                            </th:block>
                             <td class="text-right">
                                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                                     <form th:action="@{'/project/delete/{id}' (id=${project.getId()})}"

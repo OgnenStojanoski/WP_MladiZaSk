@@ -48,11 +48,16 @@ public class ProjectServiceImpl implements ProjectService{
         Person person = this.personRepository.findById(person_id).orElseThrow();
         Project project = this.projectRepository.findById(project_id).orElseThrow();
 
-        List<Person> people = project.getMembers();
-        people.add(person);
+//        List<Person> people = project.getMembers();
+//        people.add(person);
 
-        project.setMembers(people);
-        this.projectRepository.save(project);
+        if(!project.getMembers().contains(person)) {
+            project.getMembers().add(person);
+            this.projectRepository.save(project);
+
+            person.getProjects().add(project);
+            this.personRepository.save(person);
+        }
     }
 
     @Override
