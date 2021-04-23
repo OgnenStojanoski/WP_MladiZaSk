@@ -12,5 +12,7 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("Ticket")
 public class Ticket extends Product {
-
+    public Ticket(String name, Integer price, Integer quantity) {
+        super(name, price, quantity);
+    }
 }

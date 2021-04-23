@@ -1,6 +1,11 @@
 package mk.ukim.finki.wp.project.service.impl;
 
 import mk.ukim.finki.wp.project.model.Product;
+import mk.ukim.finki.wp.project.model.Products.CD;
+import mk.ukim.finki.wp.project.model.Products.T_Shirt;
+import mk.ukim.finki.wp.project.model.Products.Ticket;
+import mk.ukim.finki.wp.project.model.Projects.MusicBand;
+import mk.ukim.finki.wp.project.model.enumerations.Size;
 import mk.ukim.finki.wp.project.repository.ProductRepository;
 import mk.ukim.finki.wp.project.service.ProductService;
 import org.springframework.stereotype.Service;
@@ -33,19 +38,25 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    @Transactional
-    public Optional<Product> save(String name, Double price, Integer quantity, Long eventId) {
-        return Optional.empty();
-    }
-
-    @Override
-    @Transactional
-    public Optional<Product> edit(Long id, String name, Double price, Integer quantity, Long eventId) {
-        return Optional.empty();
-    }
-
-    @Override
     public void deleteById(Long id) {
         this.productRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public Optional<Product> save(String name, Integer price, Integer quantity, Integer numberOfSongs, Integer length) {
+        return Optional.of(this.productRepository.save(new CD(name, price, quantity, numberOfSongs, length)));
+    }
+
+    @Override
+    @Transactional
+    public Optional<Product> save(String name, Integer price, Integer quantity, Size size) {
+        return Optional.of(this.productRepository.save(new T_Shirt(name, price, quantity, size)));
+    }
+
+    @Override
+    @Transactional
+    public Optional<Product> save(String name, Integer price, Integer quantity) {
+        return Optional.of(this.productRepository.save(new Ticket(name, price, quantity)));
     }
 }

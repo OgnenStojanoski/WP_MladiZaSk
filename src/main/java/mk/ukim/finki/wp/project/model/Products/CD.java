@@ -14,5 +14,12 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("CD")
 public class CD extends Product{
-    private String name;
+    private Integer numberOfSongs;
+    private Integer length;
+
+    public CD(String name, Integer price, Integer quantity, Integer numberOfSongs, Integer length) {
+        super(name, price, quantity);
+        this.numberOfSongs = numberOfSongs;
+        this.length = length;
+    }
 }

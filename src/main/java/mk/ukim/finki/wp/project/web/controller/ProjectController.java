@@ -67,7 +67,7 @@ public class ProjectController{
     }
 
     @GetMapping("/add-members/{id}")
-    public String editProductPage(@PathVariable Long id, Model model) {
+    public String saveMemberPage(@PathVariable Long id, Model model) {
         if (this.projectService.findById(id).isPresent()) {
             Project project = this.projectService.findById(id).get();
             List<Person> people = this.personService.findAll();

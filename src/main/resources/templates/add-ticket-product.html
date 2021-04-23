@@ -7,4 +7,51 @@
 <body>
 
 </body>
-</html>
+<div xmlns:th="thymeleaf.org">
+    <th:block>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <form action="/product/add" method="POST">
+                        <input id="type_id" type="hidden" name="type_id" th:value="3">
+                        <input id="id" type="hidden" name="id" th:value="(${product} != null ? ${product.getId()} : '')">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="name"
+                                   name="name"
+                                   th:value="(${product} != null ? ${product.getName()} : '')"
+                                   required
+                                   placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="price"
+                                   name="price"
+                                   th:value="(${product} != null ? ${product.getPrice()} : '')"
+                                   required
+                                   placeholder="Price">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="quantity"
+                                   name="quantity"
+                                   th:value="(${product} != null ? ${product.getQuantity()} : '')"
+                                   required
+                                   placeholder="Quantity">
+                        </div>
+                        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                        <a type="button" class="btn btn-primary" href="/product">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </th:block>
+</div>

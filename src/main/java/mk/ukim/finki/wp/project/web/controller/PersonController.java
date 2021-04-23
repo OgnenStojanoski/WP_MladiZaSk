@@ -53,25 +53,25 @@ public class PersonController{
 
     @GetMapping("/add-form")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String addProductPage(Model model) {
+    public String addPersonPage(Model model) {
         model.addAttribute("bodyContent", "add-person");
         return "master-template";
     }
 
     @GetMapping("/edit/{id}")
-    public String editProductPage(@PathVariable Long id, Model model) {
+    public String editPersonPage(@PathVariable Long id, Model model) {
         if (this.personService.findById(id).isPresent()) {
             Person person = this.personService.findById(id).get();
             model.addAttribute("person", person);
             model.addAttribute("bodyContent", "add-person");
             return "master-template";
         }
-        return "redirect:/person?error=ProductNotFound";
+        return "redirect:/person?error=PersonNotFound";
     }
 
 
     @PostMapping("/add")
-    public String saveProduct(
+    public String savePerson(
             @RequestParam(required = false) Long id,
             @RequestParam String name,
             @RequestParam String surname,

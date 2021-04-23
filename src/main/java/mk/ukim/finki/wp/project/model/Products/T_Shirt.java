@@ -19,4 +19,9 @@ import javax.persistence.Enumerated;
 public class T_Shirt extends Product {
     @Enumerated(value = EnumType.STRING)
     private Size size;
+
+    public T_Shirt(String name, Integer price, Integer quantity, Size size) {
+        super(name, price, quantity);
+        this.size = size;
+    }
 }

@@ -1,15 +1,15 @@
 package mk.ukim.finki.wp.project.web.controller;
 
+import mk.ukim.finki.wp.project.model.Person;
 import mk.ukim.finki.wp.project.model.Product;
 import mk.ukim.finki.wp.project.model.Project;
+import mk.ukim.finki.wp.project.model.enumerations.Genre;
+import mk.ukim.finki.wp.project.model.enumerations.Size;
 import mk.ukim.finki.wp.project.service.ProductService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,5 +52,40 @@ public class ProductController{
         else if(type.equals("TICKET"))
             model.addAttribute("bodyContent", "add-ticket-product");
         return "master-template";
+    }
+
+    @PostMapping("/add")
+    public String saveProject(
+            @RequestParam(required = false) Long type_id,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer price,
+            @RequestParam(required = false) Integer quantity,
+            @RequestParam(required = false) Integer numberOfSongs,
+            @RequestParam(required = false) Integer length,
+            @RequestParam(required = false) Size size){
+        if(type_id.equals(1L))
+            this.productService.save(name, price, quantity, numberOfSongs, length);
+        else if(type_id.equals(2L))
+            this.productService.save(name, price, quantity, size);
+        else
+            this.productService.save(name, price, quantity);
+        return "redirect:/product";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editProductPage(@PathVariable Long id, Model model) {
+        if (this.productService.findById(id).isPresent()) {
+            Product product = this.productService.findById(id).get();
+            model.addAttribute("product", product);
+            //model.addAttribute("bodyContent", "add-product");
+            return "master-template";
+        }
+        return "redirect:/product?error=ProductNotFound";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteProject(@PathVariable Long id) {
+        this.productService.deleteById(id);
+        return "redirect:/product";
     }
 }

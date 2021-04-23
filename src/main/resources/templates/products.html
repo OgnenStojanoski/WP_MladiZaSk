@@ -12,6 +12,7 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
+                            <th scope="col">Product Type</th>
                             <th scope="col">Product</th>
                             <th scope="col">Price</th>
                             <th scope="col">Quantity</th>
@@ -20,6 +21,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="product : ${products}" class="product">
+                            <td th:text="${product.class.name}"></td>
                             <td th:text="${product.getName()}"></td>
                             <td th:text="${product.getPrice()}"></td>
                             <td th:text="${product.getQuantity()}"></td>
