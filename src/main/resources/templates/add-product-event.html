@@ -1,0 +1,26 @@
+<div xmlns:th="thymeleaf.org">
+    <th:block>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <form action="/events/add-product" method="POST">
+                        <input id="event_id" type="hidden" name="event_id" th:value="${event.getId()}">
+                        <div class="form-group">
+                            <label for="product_id">Choose products to add</label>
+                            <select id="product_id" size="6" name="product_id" multiple="multiple">
+                                <option th:each="product : ${products}"
+                                        th:value="${product.getId()}"
+                                        th:text="${product.getName()}">
+                                </option>
+                            </select>
+                        </div>
+                        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                        <a type="button" class="btn btn-primary" href="/events">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </th:block>
+</div>

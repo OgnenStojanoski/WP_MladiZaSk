@@ -26,7 +26,7 @@
                             <td th:text="${event.getDate()}"></td>
                             <td class="text-right">
                                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                                    <form th:action="@{'/events/add-product/{id}' (id=${event.getId()})}">
+                                    <form th:action="@{'/events/add-products/{id}' (id=${event.getId()})}">
                                         <button type="submit"
                                                 class="btn btn-sm btn-primary add-event">
                                             <i class="fa fa-trash">Add products</i>

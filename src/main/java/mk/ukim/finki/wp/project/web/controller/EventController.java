@@ -1,9 +1,11 @@
 package mk.ukim.finki.wp.project.web.controller;
 
 import mk.ukim.finki.wp.project.model.Event;
+import mk.ukim.finki.wp.project.model.Product;
 import mk.ukim.finki.wp.project.model.Projects.MusicBand;
 import mk.ukim.finki.wp.project.model.Projects.VisualArtist;
 import mk.ukim.finki.wp.project.service.EventService;
+import mk.ukim.finki.wp.project.service.ProductService;
 import mk.ukim.finki.wp.project.service.ProjectService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,10 +21,12 @@ import java.util.List;
 public class EventController{
     private final EventService eventService;
     private final ProjectService projectService;
+    private final ProductService productService;
 
-    public EventController(EventService eventService, ProjectService projectService) {
+    public EventController(EventService eventService, ProjectService projectService, ProductService productService) {
         this.eventService = eventService;
         this.projectService = projectService;
+        this.productService = productService;
     }
 
     @GetMapping
@@ -64,9 +68,36 @@ public class EventController{
         return "redirect:/events";
     }
 
+    @GetMapping("/add-products/{id}")
+    public String saveProductPage(@PathVariable Long id, Model model) {
+        if (this.eventService.findById(id).isPresent()) {
+            Event event = this.eventService.findById(id).get();
+            List<Product> products = this.productService.findAll();
+            model.addAttribute("products", products);
+            model.addAttribute("event", event);
+            model.addAttribute("bodyContent", "add-product-event");//
+            return "master-template";
+        }
+        return "redirect:/events?error=EventNotFound";
+    }
+
+    @PostMapping("/add-product")
+    public String saveProduct(
+            @RequestParam(required = false) Long event_id,
+            @RequestParam(required = false) List<Long> product_id)
+    {
+        this.eventService.saveProduct(event_id, product_id);
+        return "redirect:/events";
+    }
+
     @DeleteMapping("/delete/{id}")
-    public String deletePerson(@PathVariable Long id) {
+    public String deleteEvent(@PathVariable Long id) {
         this.eventService.deleteById(id);
         return "redirect:/events";
+    }
+
+    @GetMapping("/test")
+    public String testMap(){
+        return "test";
     }
 }
