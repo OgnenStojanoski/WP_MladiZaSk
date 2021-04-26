@@ -23,8 +23,7 @@
             </div>-->
 
             <div style="margin-left: 220px" class="right">
-                <p th:text="${event.getBand().getName()}" class="band"></p>
-                <p th:text="${event.getArtist().getName()}" class="artist"></p>
+                <h3 th:text="${event.getBand().getName()} + ' и ' + ${event.getArtist().getName()}"></h3>
                 <hr style="border: 2px solid">
                 <div>
                     <h6>Products: </h6>

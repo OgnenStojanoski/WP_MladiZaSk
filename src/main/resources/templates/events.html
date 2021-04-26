@@ -1,7 +1,8 @@
 <div xmlns:th="thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <section class="jumbotron text-left">
         <div class="container">
-            <h3 class="jumbotron-heading">Events</h3>
+            <h3 style="display: inline-block" class="jumbotron-heading">Events at &emsp;</h3>
+            <div id="map" style="height: 230px; width: 400px; display: inline-block"></div>
         </div>
     </section>
 
@@ -77,6 +78,16 @@
                                 <td th:text="${event.getDate1()}"></td>
                                 <td class="text-right">
                                     <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                        <form th:action="@{'/report/{id}' (id=${event.getId()})}"
+                                              th:method="GET">
+                                            <button type="submit"
+                                                    style="width: 100%"
+                                                    class="btn btn-sm btn-info event-report">
+                                                <i class="fa fa-trash">Report</i>
+                                            </button>
+                                        </form>
+                                    </th:block>
+                                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                                         <form th:action="@{'/events/delete/{id}' (id=${event.getId()})}"
                                               th:method="DELETE">
                                             <button type="submit"
@@ -105,3 +116,24 @@
         </div>
     </div>
 </div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""/>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+<script>
+    var mymap = L.map('map').setView([42.00139165668125, 21.43757933291373], 20);
+    var marker = L.marker([42.00139165668125, 21.43757933291373]).addTo(mymap);
+    marker.bindPopup("La Kaña - Skopje").openPopup();
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiYm9nbmVuIiwiYSI6ImNrbnlrYjY1MDFoY2UybnJtODZmcHBlcGMifQ.QpuB3XyxGZw4r3Fcq3vVug'
+    }).addTo(mymap);
+</script>

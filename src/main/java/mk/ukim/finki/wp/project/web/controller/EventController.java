@@ -8,6 +8,8 @@ import mk.ukim.finki.wp.project.model.Projects.VisualArtist;
 import mk.ukim.finki.wp.project.service.EventService;
 import mk.ukim.finki.wp.project.service.ProductService;
 import mk.ukim.finki.wp.project.service.ProjectService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -31,12 +33,20 @@ public class EventController{
     }
 
     @GetMapping
-    public String getProjectsPage(@RequestParam(required = false) String error, Model model) {
+    public String getEventsPage(@RequestParam(required = false) String error, Model model) {
         if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
         List<Event> events = this.eventService.findAll();
+        model.addAttribute("events", events);
+        model.addAttribute("bodyContent", "events");
+        return "master-template";
+    }
+
+    @GetMapping("/test2")
+    public String getEventsPageWithPagination(Pageable pageable, Model model){
+        List<Event> events = this.eventService.findAll(pageable).getContent();
         model.addAttribute("events", events);
         model.addAttribute("bodyContent", "events");
         return "master-template";

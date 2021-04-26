@@ -8,6 +8,8 @@ import mk.ukim.finki.wp.project.repository.EventRepository;
 import mk.ukim.finki.wp.project.repository.ProductRepository;
 import mk.ukim.finki.wp.project.repository.ProjectRepository;
 import mk.ukim.finki.wp.project.service.EventService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,6 +34,11 @@ public class EventServiceImpl implements EventService{
     }
 
     @Override
+    public Page<Event> findAll(Pageable pageable) {
+        return this.eventRepository.findAll(pageable);
+    }
+
+    @Override
     public Optional<Event> save(Long id, Long band_id, Long artist_id, LocalDateTime localDateTime) {
         MusicBand musicBand = (MusicBand) this.projectRepository.findById(band_id).orElseThrow();
         VisualArtist visualArtist = (VisualArtist) this.projectRepository.findById(artist_id).orElseThrow();
@@ -43,7 +50,8 @@ public class EventServiceImpl implements EventService{
     public void deleteById(Long id) {
         Event event = this.eventRepository.findById(id).orElseThrow();
         for(Product p : event.getProducts()){
-            this.productRepository.deleteById(p.getId());
+//            this.productRepository.deleteById(p.getId());
+            this.productRepository.findById(p.getId()).get().setEvent(null);
         }
         this.eventRepository.deleteById(id);
     }

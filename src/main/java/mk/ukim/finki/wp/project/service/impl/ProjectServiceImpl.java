@@ -63,6 +63,7 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public void deleteById(Long id) {
+        this.projectRepository.findById(id).get().setMembers(null);
         this.projectRepository.deleteById(id);
     }
 
