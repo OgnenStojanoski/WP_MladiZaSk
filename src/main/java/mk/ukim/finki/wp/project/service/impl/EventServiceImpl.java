@@ -39,11 +39,11 @@ public class EventServiceImpl implements EventService{
     }
 
     @Override
-    public Optional<Event> save(Long id, Long band_id, Long artist_id, LocalDateTime localDateTime) {
+    public Optional<Event> save(Long id, Long band_id, Long artist_id, LocalDateTime localDateTime, String fileName) {
         MusicBand musicBand = (MusicBand) this.projectRepository.findById(band_id).orElseThrow();
         VisualArtist visualArtist = (VisualArtist) this.projectRepository.findById(artist_id).orElseThrow();
 
-        return Optional.of(this.eventRepository.save(new Event(id, visualArtist, musicBand, localDateTime)));
+        return Optional.of(this.eventRepository.save(new Event(id, visualArtist, musicBand, localDateTime, fileName)));
     }
 
     @Override

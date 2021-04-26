@@ -13,6 +13,7 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th scope="col">Poster</th>
                             <th scope="col">Event number</th>
                             <th scope="col">Musicians</th>
                             <th scope="col">Artists</th>
@@ -20,10 +21,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr bgcolor="#d3d3d3"><td colspan="4"><h4>Incoming events:</h4></td></tr>
+                        <tr bgcolor="#d3d3d3"><td colspan="5"><h4>Incoming events:</h4></td></tr>
                         <tr th:each="event : ${events}" class="event">
                             <div th:if="${event.toLocalDate().after(#dates.createNow())}">
-                            <td style="display: block; background-color:#5cb85c">
+                                <td style="width: 340px"><img style="width: 100%; height: auto" th:src="${event.getPhotosImagePath()}" /></td>
+                                <td style="display: block; background-color:#5cb85c">
                                 <a style="color: red" th:href="@{/events/{id}(id=${event.id})}" th:text="'Настан број ' + ${event.getId()}"></a>
                             </td>
                             <td th:text="${event.getBand().getName()}"></td>
@@ -68,10 +70,11 @@
                             </td>
                             </div>
                         </tr>
-                        <tr bgcolor="#d3d3d3"><td colspan="4"><h4>Past events:</h4></td></tr>
+                        <tr bgcolor="#d3d3d3"><td colspan="5"><h4>Past events:</h4></td></tr>
                         <tr th:each="event : ${events}" class="event">
 
                         <div th:if="${event.toLocalDate().before(#dates.createNow())}">
+                                <td style="width: 320px"></td>
                                 <td th:text="'Настан број ' + ${event.id}"></td>
                                 <td th:text="${event.getBand().getName()}"></td>
                                 <td th:text="${event.getArtist().getName()}"></td>

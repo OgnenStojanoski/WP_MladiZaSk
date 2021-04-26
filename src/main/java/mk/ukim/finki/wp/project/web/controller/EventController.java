@@ -1,6 +1,7 @@
 package mk.ukim.finki.wp.project.web.controller;
 
 import mk.ukim.finki.wp.project.model.Event;
+import mk.ukim.finki.wp.project.model.FileUploadUtil;
 import mk.ukim.finki.wp.project.model.Person;
 import mk.ukim.finki.wp.project.model.Product;
 import mk.ukim.finki.wp.project.model.Projects.MusicBand;
@@ -14,8 +15,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -77,16 +83,27 @@ public class EventController{
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String addEvent(@RequestParam(required = false) Long id,
+    public String addEvent(@RequestParam("image") MultipartFile multipartFile,
+                           @RequestParam(required = false) Long id,
                            @RequestParam Long band_id,
                            @RequestParam Long artist_id,
+                           RedirectAttributes ra,
                            @RequestParam
                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-                                         LocalDateTime localDateTime){
+                                         LocalDateTime localDateTime) throws IOException {
 //        if (id != null) {
 //            //this.eventService.edit(id, name, surname, bio);
 //        } else {
-            this.eventService.save(id, band_id, artist_id, localDateTime);
+
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        //user.setPhotos(fileName);
+        this.eventService.save(id, band_id, artist_id, localDateTime, fileName);
+
+        String uploadDir = "user-photos/" + id;
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+
+        ra.addFlashAttribute("message", "Created new event!");
 //        }
         return "redirect:/events";
     }

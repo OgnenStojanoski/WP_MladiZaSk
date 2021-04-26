@@ -23,6 +23,9 @@ public class Event{
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = true, length = 64)
+    private String photos;
+
     @OneToOne
     private VisualArtist artist;
 
@@ -37,6 +40,13 @@ public class Event{
     private List<Product> products;
     //private String place;
 
+    public Event(Long id, VisualArtist visualArtist, MusicBand musicBand, LocalDateTime localDateTime, String fileName) {
+        this.id = id;
+        this.artist = visualArtist;
+        this.band = musicBand;
+        this.date = localDateTime;
+        this.photos = fileName;
+    }
 
     public Event(Long id, VisualArtist artist, MusicBand band, LocalDateTime date) {
         this.id = id;
@@ -49,6 +59,12 @@ public class Event{
 
     public Date toLocalDate(){
         return java.sql.Date.valueOf(this.date.toLocalDate());
+    }
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (photos == null || id == null) return null;
+        return "/user-photos/" + id + "/" + photos;
     }
 
     public String getDate1() {
