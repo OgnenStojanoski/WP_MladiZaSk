@@ -29,13 +29,15 @@ public class ShoppingCartController{
         }
         String username = req.getRemoteUser();
         ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(username);
+        this.shoppingCartService.reevaluateCost(shoppingCart);
         model.addAttribute("products", this.shoppingCartService.listAllProductsInShoppingCart(shoppingCart.getId()));
+        model.addAttribute("shoppingCart", shoppingCart);
         model.addAttribute("bodyContent", "shopping-cart");
         return "master-template";
     }
 
     @PostMapping("/add-product/{id}")
-    public String addProductToShoppingCart(@PathVariable Long id, HttpServletRequest req, Authentication authentication) {
+    public String addProductToShoppingCart(@PathVariable Long id, HttpServletRequest req, Authentication authentication) throws Exception {
         try {
             User user = (User) authentication.getPrincipal();
             this.shoppingCartService.addProductToShoppingCart(user.getUsername(), id);

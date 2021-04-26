@@ -25,6 +25,8 @@ public abstract class Product{
 
     private Integer price;
 
+    private Integer initialQuantity;
+
     private Integer quantity;
 
     @ManyToOne
@@ -35,6 +37,7 @@ public abstract class Product{
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.initialQuantity = quantity;
     }
 
     // CDProduct

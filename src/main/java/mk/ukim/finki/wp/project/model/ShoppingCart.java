@@ -27,6 +27,8 @@ public class ShoppingCart{
     @ManyToMany
     private List<Product> products;
 
+    private Integer cost;
+
     @Enumerated(EnumType.STRING)
     private ShoppingCartStatus status;
 
@@ -35,5 +37,6 @@ public class ShoppingCart{
         this.user = user;
         this.products = new ArrayList<>();
         this.status = ShoppingCartStatus.CREATED;
+        this.cost = 0;
     }
 }

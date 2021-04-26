@@ -1,0 +1,64 @@
+<div xmlns:th="thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <th:block>
+        <section class="jumbotron text-left">
+            <div class="container">
+                <h2>MLADI ZA SKOPJE Event</h2>
+                <h2 th:text="${event.getId()}"></h2>
+            </div>
+        </section>
+
+        <!--<div class="container">
+            <div class="row">
+                <div class="col-md-5">
+
+                </div>
+            </div>
+        </div>-->
+        <div style="display: flex" class="wrapper">
+
+            <!--<div class="left">
+                <img class="profile-picture" src="img/profile.jpg" width="200"/>
+                <h3 th:text="${person.getName()}" class="name"></h3>
+                <h2 th:text="${person.getSurname()}" class="surname"></h2>
+            </div>-->
+
+            <div style="margin-left: 220px" class="right">
+                <div style="display: inline">
+                    <h3 th:text="${event.getBand().getName()} + ' и ' + ${event.getArtist().getName()}"></h3>
+                </div>
+                <br/>
+                <br/>
+<!--                <hr style="border: 2px solid">-->
+                <div>
+                    <h4>Products: </h4>
+                    <div class="container mb-4">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Product</th>
+                                            <th scope="col">Initial quantity</th>
+                                            <th scope="col">Sold</th>
+                                            <!--<th scope="col">Projects</th>-->
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="product : ${event.getProducts()}" class="product">
+                                            <td th:text="${product.getName()}"></td>
+                                            <td th:text="${product.getInitialQuantity()}"></td>
+                                            <td th:text="${product.getInitialQuantity()} &#45; ${product.getQuantity()}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </th:block>
+</div>

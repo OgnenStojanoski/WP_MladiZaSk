@@ -8,6 +8,7 @@ import java.util.List;
 public interface ShoppingCartService{
     List<Product> listAllProductsInShoppingCart(Long cartId) throws Exception;
     ShoppingCart getActiveShoppingCart(String username);
-    ShoppingCart addProductToShoppingCart(String username, Long productId);
+    ShoppingCart addProductToShoppingCart(String username, Long productId) throws Exception;
+    void reevaluateCost(ShoppingCart shoppingCart);
 }
 

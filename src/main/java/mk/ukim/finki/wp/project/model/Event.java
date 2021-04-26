@@ -8,8 +8,10 @@ import mk.ukim.finki.wp.project.model.Projects.VisualArtist;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -27,8 +29,9 @@ public class Event{
     @OneToOne
     private MusicBand band;
 
-    @DateTimeFormat()
+    @DateTimeFormat(pattern = "RFC_1123_DATE_TIME")
     private LocalDateTime date;
+
 
     @OneToMany(mappedBy = "event")
     private List<Product> products;
@@ -44,7 +47,11 @@ public class Event{
 //        this.date.format(formatter);
     }
 
-    public String getDate() {
+    public Date toLocalDate(){
+        return java.sql.Date.valueOf(this.date.toLocalDate());
+    }
+
+    public String getDate1() {
         return date.format(DateTimeFormatter.ofPattern("EEEE, dd-MM-yyyy HH:mm"));
     }
 }

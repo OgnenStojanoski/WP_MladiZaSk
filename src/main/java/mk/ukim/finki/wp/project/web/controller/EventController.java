@@ -1,6 +1,7 @@
 package mk.ukim.finki.wp.project.web.controller;
 
 import mk.ukim.finki.wp.project.model.Event;
+import mk.ukim.finki.wp.project.model.Person;
 import mk.ukim.finki.wp.project.model.Product;
 import mk.ukim.finki.wp.project.model.Projects.MusicBand;
 import mk.ukim.finki.wp.project.model.Projects.VisualArtist;
@@ -38,6 +39,18 @@ public class EventController{
         List<Event> events = this.eventService.findAll();
         model.addAttribute("events", events);
         model.addAttribute("bodyContent", "events");
+        return "master-template";
+    }
+
+    @GetMapping("/{id}")
+    public String getEvent(@RequestParam(required = false) String error, @PathVariable Long id, Model model){
+        if (error != null && !error.isEmpty()) {
+            model.addAttribute("hasError", true);
+            model.addAttribute("error", error);
+        }
+        Event event = this.eventService.findById(id).orElseThrow();
+        model.addAttribute("event", event);
+        model.addAttribute("bodyContent", "get-event");
         return "master-template";
     }
 
@@ -89,6 +102,8 @@ public class EventController{
         this.eventService.saveProduct(event_id, product_id);
         return "redirect:/events";
     }
+
+
 
     @DeleteMapping("/delete/{id}")
     public String deleteEvent(@PathVariable Long id) {

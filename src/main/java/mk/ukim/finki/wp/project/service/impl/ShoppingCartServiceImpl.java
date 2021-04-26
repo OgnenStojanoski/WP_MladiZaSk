@@ -1,12 +1,13 @@
 package mk.ukim.finki.wp.project.service.impl;
 
 import mk.ukim.finki.wp.project.exceptions.InvalidArgumentsException;
-import mk.ukim.finki.wp.project.exceptions.ProductAlreadyInShoppingCartException;
 import mk.ukim.finki.wp.project.exceptions.ProductNotFoundException;
 import mk.ukim.finki.wp.project.model.Product;
+import mk.ukim.finki.wp.project.model.Products.Ticket;
 import mk.ukim.finki.wp.project.model.ShoppingCart;
 import mk.ukim.finki.wp.project.model.User;
 import mk.ukim.finki.wp.project.model.enumerations.ShoppingCartStatus;
+import mk.ukim.finki.wp.project.repository.ProductRepository;
 import mk.ukim.finki.wp.project.repository.ShoppingCartRepository;
 import mk.ukim.finki.wp.project.repository.UserRepository;
 import mk.ukim.finki.wp.project.service.ProductService;
@@ -14,18 +15,17 @@ import mk.ukim.finki.wp.project.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService{
     private final ShoppingCartRepository shoppingCartRepository;
     private final UserRepository userRepository;
-    private final ProductService productService;
+    private final ProductRepository productRepository;
 
-    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, UserRepository userRepository, ProductService productService) {
+    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, UserRepository userRepository, ProductRepository productRepository) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.userRepository = userRepository;
-        this.productService = productService;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -50,15 +50,39 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     }
 
     @Override
-    public ShoppingCart addProductToShoppingCart(String username, Long productId) {
+    public ShoppingCart addProductToShoppingCart(String username, Long productId) throws Exception {
         ShoppingCart shoppingCart = this.getActiveShoppingCart(username);
-        Product product = this.productService.findById(productId)
+        Product product = this.productRepository.findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException(productId));
-        if(shoppingCart.getProducts()
-                .stream().filter(i -> i.getId().equals(productId))
-                .collect(Collectors.toList()).size() > 0)
-            throw new ProductAlreadyInShoppingCartException(productId, username);
-        shoppingCart.getProducts().add(product);
-        return this.shoppingCartRepository.save(shoppingCart);
+
+        if(product.getQuantity() > 0) {
+            shoppingCart.getProducts().add(product);
+            shoppingCart.setCost(shoppingCart.getCost() + product.getPrice());
+            product.setQuantity(product.getQuantity() - 1);
+            this.productRepository.save(product);
+            return this.shoppingCartRepository.save(shoppingCart);
+        }
+        else
+            throw new Exception();
+    }
+
+    @Override
+    public void reevaluateCost(ShoppingCart shoppingCart) {
+        List<Product> products = shoppingCart.getProducts();
+        boolean flag = false; //are there other products (not tickets)
+        Integer discount = 0;
+        shoppingCart.setCost(0);
+
+        for(Product p : products){
+            if(!(p instanceof Ticket))
+                flag = true;
+            else{
+                discount = p.getPrice();
+            }
+            shoppingCart.setCost(shoppingCart.getCost() + p.getPrice());
+        }
+        if(flag){
+            shoppingCart.setCost(shoppingCart.getCost() - discount);
+        }
     }
 }

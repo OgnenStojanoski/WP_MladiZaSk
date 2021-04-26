@@ -1,0 +1,50 @@
+<div xmlns:th="thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <th:block>
+        <section class="jumbotron text-left">
+            <div class="container">
+                <h2>MLADI ZA SKOPJE Event</h2>
+                <h2 th:text="${event.getId()}"></h2>
+            </div>
+        </section>
+
+        <!--<div class="container">
+            <div class="row">
+                <div class="col-md-5">
+
+                </div>
+            </div>
+        </div>-->
+        <div style="display: flex" class="wrapper">
+
+            <!--<div class="left">
+                <img class="profile-picture" src="img/profile.jpg" width="200"/>
+                <h3 th:text="${person.getName()}" class="name"></h3>
+                <h2 th:text="${person.getSurname()}" class="surname"></h2>
+            </div>-->
+
+            <div style="margin-left: 220px" class="right">
+                <p th:text="${event.getBand().getName()}" class="band"></p>
+                <p th:text="${event.getArtist().getName()}" class="artist"></p>
+                <hr style="border: 2px solid">
+                <div>
+                    <h6>Products: </h6>
+                    <ul th:each="product: ${event.getProducts()}" class="products">
+                        <li th:text="${product.getName()}"></li>
+
+                        <form th:action="@{'/shopping-cart/add-product/{id}' (id=${product.getId()})}"
+                              th:method="POST"
+                              sec:authorize="isAuthenticated()">
+                            <button type="submit"
+                                    class="btn btn-sm btn-primary cart-product">
+                                <i class="fa fa-trash">Add product to cart</i>
+                            </button>
+                        </form>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </th:block>
+</div>
