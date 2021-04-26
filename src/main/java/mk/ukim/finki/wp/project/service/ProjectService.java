@@ -1,6 +1,8 @@
 package mk.ukim.finki.wp.project.service;
 
 import mk.ukim.finki.wp.project.model.Project;
+import mk.ukim.finki.wp.project.model.Projects.MusicBand;
+import mk.ukim.finki.wp.project.model.Projects.VisualArtist;
 import mk.ukim.finki.wp.project.model.enumerations.Genre;
 
 import java.util.List;
@@ -13,4 +15,6 @@ public interface ProjectService{
     Optional<Project> findById(Long id);
     void saveMember(Long project_id, Long person_id);
     void deleteById(Long id);
+    List<MusicBand> getBands();
+    List<VisualArtist> getArtists();
 }

@@ -5,9 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.wp.project.model.Projects.MusicBand;
 import mk.ukim.finki.wp.project.model.Projects.VisualArtist;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @NoArgsConstructor
@@ -25,6 +27,7 @@ public class Event{
     @OneToOne
     private MusicBand band;
 
+    @DateTimeFormat()
     private LocalDateTime date;
 
     @OneToMany(mappedBy = "event")
@@ -37,5 +40,11 @@ public class Event{
         this.artist = artist;
         this.band = band;
         this.date = date;
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+//        this.date.format(formatter);
+    }
+
+    public String getDate() {
+        return date.format(DateTimeFormatter.ofPattern("EEEE, dd-MM-yyyy HH:mm"));
     }
 }

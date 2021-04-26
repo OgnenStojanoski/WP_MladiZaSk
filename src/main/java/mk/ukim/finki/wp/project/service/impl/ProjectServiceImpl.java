@@ -10,6 +10,7 @@ import mk.ukim.finki.wp.project.repository.ProjectRepository;
 import mk.ukim.finki.wp.project.service.ProjectService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,5 +64,27 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public void deleteById(Long id) {
         this.projectRepository.deleteById(id);
+    }
+
+    @Override
+    public List<MusicBand> getBands() {
+        List<Project> projects = this.projectRepository.findAll();
+        List<MusicBand> bands = new ArrayList<>();
+        for(Project p : projects){
+            if(p instanceof MusicBand)
+                bands.add((MusicBand) p);
+        }
+        return bands;
+    }
+
+    @Override
+    public List<VisualArtist> getArtists() {
+        List<Project> projects = this.projectRepository.findAll();
+        List<VisualArtist> artists = new ArrayList<>();
+        for(Project p : projects){
+            if(p instanceof VisualArtist)
+                artists.add((VisualArtist) p);
+        }
+        return artists;
     }
 }

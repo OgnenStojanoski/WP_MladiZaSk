@@ -8,14 +8,17 @@
         <version>2.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>mk.ukim.finki.wp</groupId>
     <artifactId>project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>project</name>
+
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -32,6 +35,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>bootstrap-datetime-picker</artifactId>
+            <version>2.4.4</version>
         </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
