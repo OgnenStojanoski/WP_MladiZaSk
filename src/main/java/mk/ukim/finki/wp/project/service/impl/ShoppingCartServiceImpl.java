@@ -69,6 +69,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Override
     public void reevaluateCost(ShoppingCart shoppingCart) {
         List<Product> products = shoppingCart.getProducts();
+        User user = shoppingCart.getUser();
         boolean flag = false; //are there other products (not tickets)
         Integer discount = 0;
         shoppingCart.setCost(0);
@@ -84,5 +85,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         if(flag){
             shoppingCart.setCost(shoppingCart.getCost() - discount);
         }
+        this.userRepository.save(user);
     }
 }
